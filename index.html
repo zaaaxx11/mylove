@@ -3,72 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 22nd Birthday! 🦄💖</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Happy 22nd Birthday My Love! 💖🎂</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --pink: #FF6B6B;
+            --light-pink: #FFB6C1;
+            --bg: #FFF5F7;
+            --text: #8A4B75;
+            --green: #32CD32;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.1);
+        }
+        
+        h1 {
+            color: var(--pink);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .heart { color: var(--pink); animation: heartbeat 1.5s infinite; }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .game-area {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .counter {
+            font-size: 1.8rem;
+            color: var(--pink);
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .orbs-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .orbs-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        
+        @media (max-width: 480px) {
+            .orbs-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        .orb {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, var(--light-pink), var(--pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            border: 4px solid white;
+        }
+        
+        .orb:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.5);
+        }
+        
+        .orb.collected {
+            background: linear-gradient(145deg, var(--green), #98FB98);
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+        
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+            animation: slideUp 0.4s;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .photo-container {
+            padding: 0;
+        }
+        
+        .memory-photo {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-info {
+            padding: 25px;
+        }
+        
+        .photo-title {
+            color: var(--pink);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+        
+        .photo-desc {
+            color: var(--text);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .photo-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-btn {
+            background: var(--light-pink);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            font-size: 1.2rem;
+        }
+        
+        .nav-btn:hover {
+            background: var(--pink);
+            transform: scale(1.1);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--pink);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        .instructions {
+            background: #FFF0F5;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-heart"></i> Happy 22nd Birthday! <i class="fas fa-heart"></i></h1>
-            <p class="subtitle">Untuk kekasihku yang paling spesial 💕</p>
-            <p class="from">Dari: <span class="name">[Nama Kamu]</span> ❤️</p>
+            <h1><span class="heart">❤️</span> Happy 22nd Birthday! <span class="heart">🎂</span></h1>
+            <p class="subtitle">Untuk kekasihku yang paling spesial di dunia</p>
+            <p style="margin-top: 10px; font-size: 1.1rem;">
+                Dari: <strong style="color: var(--pink);">[Nama Kamu]</strong> dengan cinta ❤️
+            </p>
         </header>
         
-        <div class="game-info">
+        <div class="instructions">
+            <p><i class="fas fa-star" style="color: var(--pink);"></i> <strong>Cara main:</strong></p>
+            <p>1. Klik lingkaran angka untuk melihat foto kenangan kita</p>
+            <p>2. Setiap foto baru yang dibuka akan ditandai dengan warna hijau</p>
+            <p>3. Kumpulkan semua 22 kenangan untuk kejutan spesial!</p>
+        </div>
+        
+        <div class="game-area">
             <div class="counter">
-                <i class="fas fa-star"></i>
-                <span id="count">0</span>/22 Memories Collected
+                <i class="fas fa-images"></i>
+                <span id="count">0</span> / 22 Memories Collected
             </div>
-            <p class="instruction">Klik angka untuk melihat kenangan spesial kita!</p>
-        </div>
-        
-        <div class="orbs-grid" id="orbsGrid">
-            <!-- 22 orb akan dibuat oleh JavaScript -->
-        </div>
-        
-        <div class="controls">
-            <button onclick="resetGame()" class="btn reset-btn">
-                <i class="fas fa-redo"></i> Reset
-            </button>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-text" id="progressText">0%</div>
+            
+            <div class="orbs-grid" id="orbsGrid">
+                <!-- Orbs will be created by JavaScript -->
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button onclick="resetGame()" style="
+                    background: var(--light-pink);
+                    color: white;
+                    border: none;
+                    padding: 12px 25px;
+                    border-radius: 50px;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    transition: 0.3s;
+                ">
+                    <i class="fas fa-redo"></i> Reset Game
+                </button>
             </div>
         </div>
         
-        <div class="message">
-            <p><i class="fas fa-quote-left"></i> Semoga di usia 22 ini, semua impianmu terkabul dan kebahagiaan selalu menyertaimu. Aku sayang kamu! <i class="fas fa-quote-right"></i></p>
+        <div style="background: white; padding: 25px; border-radius: 15px; margin: 20px 0;">
+            <h3 style="color: var(--pink); margin-bottom: 15px;">
+                <i class="fas fa-heart"></i> Birthday Message
+            </h3>
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                "Sayangku, di ulang tahunmu yang ke-22 ini, aku berharap semua impianmu terkabul, 
+                kebahagiaan selalu menyertaimu, dan kita terus bersama melewati semua petualangan hidup. 
+                Aku bersyukur memiliki kamu dalam hidupku. I love you! 💖"
+            </p>
         </div>
         
         <footer>
-            <p>Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> using GitHub Pages</p>
+            <p>Made with <i class="fas fa-heart" style="color: var(--pink);"></i> for you | Happy 22nd Birthday!</p>
         </footer>
     </div>
     
     <!-- Photo Popup -->
     <div class="popup" id="photoPopup">
+        <button class="close-btn" onclick="closePopup()">
+            <i class="fas fa-times"></i>
+        </button>
         <div class="popup-content">
-            <button class="close-btn" onclick="closePopup()">
-                <i class="fas fa-times"></i>
-            </button>
             <div class="photo-container">
-                <div class="image-wrapper">
-                    <img id="popupImage" src="" alt="Our Memory" class="memory-photo">
-                    <div class="loading">Loading photo...</div>
-                </div>
+                <img id="popupImage" src="" alt="Our Memory" class="memory-photo">
                 <div class="photo-info">
-                    <h3 id="photoTitle">Memory #1</h3>
-                    <p id="photoDescription">This is our beautiful memory together.</p>
-                    <div class="photo-meta">
-                        <button class="nav-btn" onclick="prevPhoto()">
+                    <h3 class="photo-title" id="photoTitle">Memory #1</h3>
+                    <p class="photo-desc" id="photoDescription">This is our beautiful memory together.</p>
+                    <div class="photo-nav">
+                        <button class="nav-btn" onclick="prevPhoto()" id="prevBtn">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <span class="photo-number" id="photoNumber">1/22</span>
-                        <button class="nav-btn" onclick="nextPhoto()">
+                        <span id="photoCounter">1/22</span>
+                        <button class="nav-btn" onclick="nextPhoto()" id="nextBtn">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
@@ -77,17 +328,260 @@
         </div>
     </div>
     
-    <!-- Music Player -->
-    <div class="music-player">
-        <button id="musicToggle" class="music-btn">
-            <i class="fas fa-play"></i>
-        </button>
-        <div class="music-info">
-            <span>Birthday Song</span>
-            <small>For You</small>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
+    <script>
+        // ===== MEMORIES DATA =====
+        // ⭐ PASTE 22 URL DI SINI! ⭐
+        const memories = [
+            { 
+                title: "Memory #1", 
+                description: "Ini adalah kenangan indah pertama kita bersama.",
+                imageUrl: "https://i.ibb.co/2Y7kYpG5/1.jpg" 
+            },
+            { 
+                title: "Memory #2", 
+                description: "Momen spesial yang selalu kita ingat.",
+                imageUrl: "https://i.ibb.co/Z1gz98WN/2.jpg" 
+            },
+            { 
+                title: "Memory #3", 
+                description: "Waktu kita tertawa bersama sampai sakit perut.",
+                imageUrl: "https://i.ibb.co/5h8xHnYB/3.jpg" 
+            },
+            { 
+                title: "Memory #4", 
+                description: "Petualangan seru yang tidak terlupakan.",
+                imageUrl: "https://i.ibb.co/PzCWkBTD/4.jpg" 
+            },
+            { 
+                title: "Memory #5", 
+                description: "Hari dimana kita semakin dekat.",
+                imageUrl: "https://i.ibb.co/nq9Vjjf5/5.jpg" 
+            },
+            { 
+                title: "Memory #6", 
+                description: "Momen romantic yang sederhana tapi berarti.",
+                imageUrl: "https://i.ibb.co/tM6Yb4JY/6.jpg" 
+            },
+            { 
+                title: "Memory #7", 
+                description: "Waktu kita mencoba hal baru bersama.",
+                imageUrl: "https://i.ibb.co/HfctgDDP/7.jpg" 
+            },
+            { 
+                title: "Memory #8", 
+                description: "Selfie spontan yang jadi favorit.",
+                imageUrl: "https://i.ibb.co/Q5nTMng/8.jpg" 
+            },
+            { 
+                title: "Memory #9", 
+                description: "Celebration kecil untuk pencapaian kita.",
+                imageUrl: "https://i.ibb.co/Kx8rNTqH/9.jpg" 
+            },
+            { 
+                title: "Memory #10", 
+                description: "Kenangan manis di tempat favorite.",
+                imageUrl: "https://i.ibb.co/JwmM4kTZ/10.jpg" 
+            },
+            { 
+                title: "Memory #11", 
+                description: "Ketika waktu terasa berhenti untuk kita.",
+                imageUrl: "https://i.ibb.co/Zp8s6YmP/11.jpg" 
+            },
+            { 
+                title: "Memory #12", 
+                description: "Momen candid yang paling natural.",
+                imageUrl: "https://i.ibb.co/Gv2tbGJG/12.jpg" 
+            },
+            { 
+                title: "Memory #13", 
+                description: "Liburan pertama kita berdua.",
+                imageUrl: "https://i.ibb.co/r8dFnYZ/13.jpg" 
+            },
+            { 
+                title: "Memory #14", 
+                description: "Waktu hujan yang malah bikin romantis.",
+                imageUrl: "https://i.ibb.co/g8xw6Gf/14.jpg" 
+            },
+            { 
+                title: "Memory #15", 
+                description: "Foto dengan latar belakang yang indah.",
+                imageUrl: "https://i.ibb.co/fVTKNGpY/15.jpg" 
+            },
+            { 
+                title: "Memory #16", 
+                description: "Makan bersama di restoran baru.",
+                imageUrl: "https://i.ibb.co/rf44xMBf/16.jpg" 
+            },
+            { 
+                title: "Memory #17", 
+                description: "Pergi nonton film favorite.",
+                imageUrl: "https://i.ibb.co/g8xw6Gf/17.jpg" 
+            },
+            { 
+                title: "Memory #18", 
+                description: "Jalan-jalan sore yang menyenangkan.",
+                imageUrl: "https://i.ibb.co/zVk4vk2g/18.jpg" 
+            },
+            { 
+                title: "Memory #19", 
+                description: "Foto dengan ekspresi lucu kita.",
+                imageUrl: "https://i.ibb.co/wFPMBZFV/19.jpg" 
+            },
+            { 
+                title: "Memory #20", 
+                description: "Momen sebelum acara spesial.",
+                imageUrl: "https://i.ibb.co/4ZC9fRG4/20.jpg" 
+            },
+            { 
+                title: "Memory #21", 
+                description: "Kenangan di alam terbuka.",
+                imageUrl: "https://i.ibb.co/fYW1Tpgz/21.jpg" 
+            },
+            { 
+                title: "Memory #22", 
+                description: "Foto terbaru dan terbaik kita!",
+                imageUrl: "https://i.ibb.co/ZpP26mB8/22.jpg" 
+            }
+        ];
+        
+        // ===== GAME VARIABLES =====
+        let collectedCount = 0;
+        let currentPhotoIndex = 0;
+        
+        // ===== DOM ELEMENTS =====
+        const orbsGrid = document.getElementById('orbsGrid');
+        const countElement = document.getElementById('count');
+        const photoPopup = document.getElementById('photoPopup');
+        const popupImage = document.getElementById('popupImage');
+        const photoTitle = document.getElementById('photoTitle');
+        const photoDescription = document.getElementById('photoDescription');
+        const photoCounter = document.getElementById('photoCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // ===== CREATE ORBS =====
+        function createOrbs() {
+            orbsGrid.innerHTML = '';
+            
+            memories.forEach((memory, index) => {
+                const orb = document.createElement('div');
+                orb.className = 'orb';
+                orb.textContent = index + 1;
+                orb.dataset.index = index;
+                
+                // Animation delay
+                orb.style.animationDelay = `${index * 0.05}s`;
+                
+                // Click event
+                orb.addEventListener('click', () => {
+                    showPhoto(index);
+                    
+                    // Mark as collected
+                    if (!orb.classList.contains('collected')) {
+                        orb.classList.add('collected');
+                        collectedCount++;
+                        countElement.textContent = collectedCount;
+                        
+                        // Celebration
+                        if (collectedCount === memories.length) {
+                            setTimeout(() => {
+                                alert('🎉🎉🎉 SELAMAT! Semua 22 kenangan terkumpul!\n\nHappy 22nd Birthday Sayangku! 🎂❤️\nSemoga semua impianmu tercapai, kesehatan selalu menyertaimu, dan kebahagiaan tak pernah berhenti menghampirimu.\n\nAku sayang kamu lebih dari apapun! 💖');
+                            }, 800);
+                        }
+                    }
+                });
+                
+                orbsGrid.appendChild(orb);
+            });
+        }
+        
+        // ===== SHOW PHOTO =====
+        function showPhoto(index) {
+            currentPhotoIndex = index;
+            const memory = memories[index];
+            
+            // Update image and text
+            popupImage.src = memory.imageUrl;
+            photoTitle.textContent = memory.title;
+            photoDescription.textContent = memory.description;
+            photoCounter.textContent = `${index + 1}/${memories.length}`;
+            
+            // Update navigation buttons
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === memories.length - 1;
+            
+            // Show popup
+            photoPopup.style.display = 'flex';
+            
+            console.log('Showing photo:', memory.imageUrl);
+        }
+        
+        // ===== PHOTO NAVIGATION =====
+        function prevPhoto() {
+            if (currentPhotoIndex > 0) {
+                showPhoto(currentPhotoIndex - 1);
+            }
+        }
+        
+        function nextPhoto() {
+            if (currentPhotoIndex < memories.length - 1) {
+                showPhoto(currentPhotoIndex + 1);
+            }
+        }
+        
+        // ===== CLOSE POPUP =====
+        function closePopup() {
+            photoPopup.style.display = 'none';
+        }
+        
+        // ===== RESET GAME =====
+        function resetGame() {
+            if (confirm('Reset semua progress dan mulai dari awal?')) {
+                collectedCount = 0;
+                countElement.textContent = '0';
+                
+                document.querySelectorAll('.orb').forEach(orb => {
+                    orb.classList.remove('collected');
+                });
+                
+                alert('Game telah direset! Klik lingkaran untuk mulai lagi.');
+            }
+        }
+        
+        // ===== INITIALIZE =====
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🎂 Birthday Game Loaded!');
+            console.log('📸 Total memories:', memories.length);
+            
+            createOrbs();
+            
+            // Close popup when clicking outside
+            photoPopup.addEventListener('click', (e) => {
+                if (e.target === photoPopup) {
+                    closePopup();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (photoPopup.style.display === 'flex') {
+                    if (e.key === 'ArrowLeft') prevPhoto();
+                    if (e.key === 'ArrowRight') nextPhoto();
+                    if (e.key === 'Escape') closePopup();
+                }
+                
+                if (e.key === 'r' || e.key === 'R') resetGame();
+            });
+            
+            // Check for duplicate URLs
+            const urlMap = {};
+            memories.forEach((mem, idx) => {
+                if (urlMap[mem.imageUrl]) {
+                    console.warn(`⚠️ DUPLICATE URL: Photo ${idx + 1} has same URL as photo ${urlMap[mem.imageUrl]}`);
+                }
+                urlMap[mem.imageUrl] = idx + 1;
+            });
+        });
+    </script>
 </body>
 </html>
