@@ -822,8 +822,7 @@
         }
     </style>
 </head>
-<!-- GOOGLE DRIVE AUDIO FIX -->
-<script src="google-drive-audio.js"></script>
+
 <body>
     <!-- LOADING SCREEN -->
     <div class="loading" id="loading">
@@ -1398,5 +1397,100 @@ additionalPhotos.forEach((url, index) => {
             }, 3000);
         };
     </script>
+    <!-- SIMPLE AUDIO PLAYER - PASTI KELIHATAN -->
+<div id="simpleAudio" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 99999;
+    border: 4px solid #FF6BB5;
+    text-align: center;
+    min-width: 300px;
+">
+    <h3 style="color: #FF6BB5; margin-bottom: 15px;">
+        <i class="fas fa-music"></i> Putar Lagu Nadin Amizah
+    </h3>
+    
+    <!-- AUDIO PLAYER -->
+    <audio controls style="width: 100%; margin-bottom: 15px;">
+        <source src="https://drive.google.com/uc?export=download&id=1SaTIkLsgl-4HRJfSaZumZIV9AqL3GVgv" type="audio/mpeg">
+    </audio>
+    
+    <button onclick="startExperience()" style="
+        background: linear-gradient(145deg, #FF6BB5, #FF8EC7);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        width: 100%;
+        margin-top: 10px;
+    ">
+        <i class="fas fa-play"></i> MULAI KEJUTAN
+    </button>
+    
+    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+        Klik play di atas, lalu mulai kejutan
+    </p>
+</div>
+
+<script>
+// SIMPLE START FUNCTION
+function startExperience() {
+    // Hide audio player
+    document.getElementById('simpleAudio').style.display = 'none';
+    
+    // Show scene1
+    document.getElementById('scene1').style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById('scene1').style.opacity = '1';
+    }, 50);
+    
+    // Add mini audio control
+    addMiniAudioControl();
+}
+
+// ADD MINI AUDIO CONTROL
+function addMiniAudioControl() {
+    const miniControl = document.createElement('div');
+    miniControl.innerHTML = `
+        <div style="
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            z-index: 999;
+            border: 3px solid #FF6BB5;
+            min-width: 200px;
+        ">
+            <div style="color: #FF6BB5; font-weight: bold; margin-bottom: 10px;">
+                <i class="fas fa-music"></i> Kontrol Audio
+            </div>
+            <audio controls style="width: 100%;">
+                <source src="https://drive.google.com/uc?export=download&id=1SaTIkLsgl-4HRJfSaZumZIV9AqL3GVgv" type="audio/mpeg">
+            </audio>
+        </div>
+    `;
+    document.body.appendChild(miniControl);
+}
+
+// Hide all scenes initially
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('scene1').style.display = 'none';
+    document.getElementById('scene2').style.display = 'none';
+    document.getElementById('scene3').style.display = 'none';
+});
+</script>
 </body>
 </html>
+
