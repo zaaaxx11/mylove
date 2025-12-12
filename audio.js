@@ -1,320 +1,264 @@
-// ==================== AUDIO FIX FOR BIRTHDAY PROJECT ====================
-// File ini khusus untuk memperbaiki audio dengan link vocaroo
+// ==================== EMERGENCY AUDIO FIX ====================
+console.log("🚨 EMERGENCY AUDIO FIX LOADING");
 
-console.log("🎵 Loading Audio Fix System...");
+// ==================== AUDIO SETTINGS ====================
+const AUDIO_CONFIG = {
+    blowSound: "https://assets.mixkit.co/sfx/download/mixkit-candle-blow-738.mp3",
+    
+    // ⚠️ GANTI LINK INI DENGAN LINK GOOGLE DRIVE KAMU ⚠️
+    backgroundMusic: "https://drive.google.com/uc?export=download&id=1SaTIkLsgl-4HRJfSaZumZIV9AqL3GVgv",
+    
+    // Alternatif jika Google Drive gagal:
+    fallbackMusic: "https://assets.mixkit.co/music/download/mixkit-valentines-day-389.mp3"
+};
 
-// ==================== VARIABLES ====================
-let audioInitialized = false;
-const USER_AUDIO_URL = "https://voca.ro/17MZiG75zwcj"; // LINK LAGU NADIN AMIZAH KAMU
-const BLOW_SOUND_URL = "https://assets.mixkit.co/sfx/download/mixkit-candle-blow-738.mp3";
-
-// ==================== INIT AUDIO SYSTEM ====================
-function initAudioSystem() {
-    if (audioInitialized) return;
+// ==================== MAIN FIX ====================
+function emergencyAudioFix() {
+    console.log("Applying emergency audio fix...");
     
-    console.log("Initializing audio system...");
+    // 1. REMOVE EXISTING AUDIO ELEMENTS
+    const oldBlow = document.getElementById('blowSound');
+    const oldMusic = document.getElementById('bgMusic');
+    if (oldBlow) oldBlow.remove();
+    if (oldMusic) oldMusic.remove();
     
-    // 1. REPLACE AUDIO SOURCES
-    const blowSound = document.getElementById('blowSound');
-    const bgMusic = document.getElementById('bgMusic');
+    // 2. CREATE NEW AUDIO ELEMENTS
+    const audioContainer = document.createElement('div');
+    audioContainer.style.display = 'none';
+    audioContainer.innerHTML = `
+        <audio id="blowSoundFixed" preload="auto">
+            <source src="${AUDIO_CONFIG.blowSound}" type="audio/mpeg">
+        </audio>
+        <audio id="bgMusicFixed" preload="auto" loop>
+            <source src="${AUDIO_CONFIG.backgroundMusic}" type="audio/mpeg">
+        </audio>
+    `;
+    document.body.appendChild(audioContainer);
     
-    if (blowSound) {
-        blowSound.innerHTML = `<source src="${BLOW_SOUND_URL}" type="audio/mpeg">`;
-        blowSound.volume = 0.8;
-        console.log("✅ Blow sound updated");
-    }
+    // 3. CREATE SIMPLE AUDIO CONTROL
+    createSimpleAudioControl();
     
-    if (bgMusic) {
-        bgMusic.innerHTML = `<source src="${USER_AUDIO_URL}" type="audio/mpeg">`;
-        bgMusic.volume = 0.6;
-        bgMusic.loop = true;
-        console.log("✅ Background music updated with your link");
-    }
+    // 4. OVERRIDE BLOW CANDLE FUNCTION
+    overrideBlowCandle();
     
-    // 2. CREATE AUDIO UNLOCK BUTTON
-    createAudioUnlockButton();
-    
-    // 3. MODIFY BLOW CANDLE FUNCTION
-    patchBlowCandleFunction();
-    
-    audioInitialized = true;
-    console.log("🎵 Audio system ready!");
+    console.log("✅ Emergency audio fix applied");
 }
 
-// ==================== CREATE AUDIO UNLOCK BUTTON ====================
-function createAudioUnlockButton() {
-    // Remove existing button if any
-    const existingBtn = document.getElementById('audioUnlockBtn');
-    if (existingBtn) existingBtn.remove();
+// ==================== SIMPLE AUDIO CONTROL ====================
+function createSimpleAudioControl() {
+    // Remove existing controls
+    const existing = document.getElementById('simpleAudioControl');
+    if (existing) existing.remove();
     
-    // Create new button
-    const audioBtn = document.createElement('div');
-    audioBtn.id = 'audioUnlockBtn';
-    audioBtn.innerHTML = `
-        <button onclick="unlockAudio()" style="
-            background: linear-gradient(145deg, #4CAF50, #2E7D32);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 15px auto;
-            transition: all 0.3s;
+    const control = document.createElement('div');
+    control.id = 'simpleAudioControl';
+    control.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 9999;
+            border: 3px solid #FF6BB5;
+            min-width: 250px;
         ">
-            <i class="fas fa-volume-up"></i> Klik di Sini untuk Mengaktifkan Audio
-        </button>
-        <p style="font-size: 0.9rem; color: #666; margin-top: 8px;">
-            (Browser memblokir audio otomatis. Klik ini sekali sebelum tiup lilin)
-        </p>
+            <h4 style="margin: 0 0 10px 0; color: #FF6BB5;">
+                <i class="fas fa-volume-up"></i> Audio Control
+            </h4>
+            
+            <div style="margin-bottom: 10px;">
+                <button onclick="playTestSound()" style="
+                    background: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    width: 100%;
+                    margin-bottom: 5px;
+                ">
+                    <i class="fas fa-play"></i> Test Suara Tiup
+                </button>
+                <small style="color: #666;">Cek apakah browser support audio</small>
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <button onclick="playBackgroundMusic()" style="
+                    background: #2196F3;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    width: 100%;
+                ">
+                    <i class="fas fa-music"></i> Putar Lagu Nadin
+                </button>
+                <small style="color: #666;">Klik sebelum tiup lilin</small>
+            </div>
+            
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                <label style="font-size: 0.9rem; display: block; margin-bottom: 5px;">
+                    Volume: <span id="volumeValue">70%</span>
+                </label>
+                <input type="range" id="volumeSlider" min="0" max="100" value="70" 
+                       style="width: 100%;" oninput="updateVolume(this.value)">
+            </div>
+            
+            <div style="margin-top: 15px; color: #666; font-size: 0.8rem;">
+                <i class="fas fa-info-circle"></i> Klik "Putar Lagu Nadin" dulu, lalu "Tiup Lilin"
+            </div>
+        </div>
     `;
     
-    audioBtn.style.cssText = `
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        z-index: 9999;
-        text-align: center;
-        border: 3px solid #FF6BB5;
-        max-width: 400px;
-        width: 90%;
-    `;
-    
-    document.body.appendChild(audioBtn);
+    document.body.appendChild(control);
 }
 
-// ==================== UNLOCK AUDIO FUNCTION ====================
-function unlockAudio() {
-    console.log("Unlocking audio...");
-    
-    // Create and play silent audio
-    const silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==");
-    
-    silentAudio.play().then(() => {
-        console.log("✅ Audio context unlocked!");
-        
-        // Hide the unlock button
-        const btn = document.getElementById('audioUnlockBtn');
-        if (btn) {
-            btn.innerHTML = `
-                <div style="color: #4CAF50; font-size: 1.1rem;">
-                    <i class="fas fa-check-circle"></i> Audio siap!<br>
-                    <small>Sekarang klik "Tiup Lilin"</small>
-                </div>
-            `;
-            setTimeout(() => {
-                btn.style.opacity = '0.7';
-                setTimeout(() => btn.style.display = 'none', 500);
-            }, 2000);
-        }
-        
-        // Test play background music
-        const bgMusic = document.getElementById('bgMusic');
-        if (bgMusic) {
-            bgMusic.play().then(() => {
-                console.log("✅ Background music test successful");
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
-            }).catch(e => {
-                console.log("Background music still blocked");
-            });
-        }
-        
+// ==================== AUDIO FUNCTIONS ====================
+function playTestSound() {
+    const audio = new Audio(AUDIO_CONFIG.blowSound);
+    audio.volume = 0.7;
+    audio.play().then(() => {
+        alert("✅ Suara berhasil! Browser support audio.");
     }).catch(e => {
-        console.log("Audio unlock failed");
-        alert("❌ Gagal mengaktifkan audio. Coba refresh halaman dan klik lagi.");
+        alert("❌ Browser memblokir audio. Coba izinkan audio di browser settings.");
     });
 }
 
-// ==================== PATCH BLOW CANDLE FUNCTION ====================
-function patchBlowCandleFunction() {
-    const originalBlowCandle = window.blowCandle;
+function playBackgroundMusic() {
+    const bgMusic = document.getElementById('bgMusicFixed');
+    if (!bgMusic) {
+        alert("Audio system belum siap. Refresh halaman.");
+        return;
+    }
     
-    if (typeof originalBlowCandle === 'function') {
-        // Replace the function
-        window.blowCandle = function() {
-            console.log("🎂 Modified blowCandle called");
-            
-            const flame = document.getElementById('flame');
-            const btn = document.getElementById('blowButton');
-            const cakeContainer = document.getElementById('cakeContainer');
-            
-            if (!flame || !btn) return;
-            
-            // 1. GET AUDIO ELEMENTS
-            const blowSound = document.getElementById('blowSound');
-            const bgMusic = document.getElementById('bgMusic');
-            
-            // 2. PLAY BLOW SOUND (try-catch untuk safety)
-            if (blowSound) {
-                blowSound.currentTime = 0;
-                blowSound.play().then(() => {
-                    console.log("✅ Blow sound played");
-                }).catch(e => {
-                    console.log("Blow sound blocked");
-                });
-            }
-            
-            // 3. ANIMATIONS
-            if (cakeContainer) {
-                cakeContainer.classList.add('shake-hard');
-                document.body.classList.add('shake-hard');
-            }
-            
+    bgMusic.volume = 0.7;
+    bgMusic.currentTime = 0;
+    bgMusic.play().then(() => {
+        console.log("✅ Lagu Nadin diputar");
+        document.getElementById('simpleAudioControl').innerHTML = `
+            <div style="color: #4CAF50; padding: 10px; text-align: center;">
+                <i class="fas fa-check-circle"></i> Lagu sedang diputar!<br>
+                <small>Sekarang klik "Tiup Lilin"</small>
+            </div>
+        `;
+    }).catch(e => {
+        console.error("Gagal memutar lagu:", e);
+        alert("❌ Gagal memutar lagu. Coba:\n1. Izinkan audio di browser\n2. Gunakan browser lain\n3. Pastikan link audio valid");
+    });
+}
+
+function updateVolume(value) {
+    const bgMusic = document.getElementById('bgMusicFixed');
+    const blowSound = document.getElementById('blowSoundFixed');
+    const volume = value / 100;
+    
+    if (bgMusic) bgMusic.volume = volume;
+    if (blowSound) blowSound.volume = Math.min(volume * 1.2, 1);
+    
+    document.getElementById('volumeValue').textContent = value + '%';
+}
+
+// ==================== OVERRIDE BLOW CANDLE ====================
+function overrideBlowCandle() {
+    const blowBtn = document.getElementById('blowButton');
+    if (!blowBtn) return;
+    
+    // Remove existing event listeners
+    const newBlowBtn = blowBtn.cloneNode(true);
+    blowBtn.parentNode.replaceChild(newBlowBtn, blowBtn);
+    
+    // Add new event listener
+    newBlowBtn.addEventListener('click', function() {
+        console.log("🎂 Emergency blow candle triggered");
+        
+        const flame = document.getElementById('flame');
+        const cakeContainer = document.getElementById('cakeContainer');
+        
+        // 1. PLAY BLOW SOUND
+        const blowSound = document.getElementById('blowSoundFixed');
+        if (blowSound) {
+            blowSound.currentTime = 0;
+            blowSound.volume = 0.8;
+            blowSound.play().catch(e => console.log("Blow sound skipped"));
+        }
+        
+        // 2. ANIMATIONS
+        if (cakeContainer) {
+            cakeContainer.classList.add('shake-hard');
+            document.body.classList.add('shake-hard');
+        }
+        
+        if (flame) {
             flame.style.animation = 'none';
             flame.style.opacity = '0';
             flame.style.transform = 'scale(0.2)';
             flame.style.transition = 'all 0.9s';
-            
-            btn.innerHTML = '<i class="fas fa-sparkles"></i> Membuka Kejutan...';
-            btn.disabled = true;
-            
-            // 4. PLAY BACKGROUND MUSIC AFTER 1 SECOND
-            setTimeout(() => {
-                if (bgMusic) {
-                    bgMusic.currentTime = 0;
-                    bgMusic.play().then(() => {
-                        console.log("✅ Your Nadin Amizah song playing!");
-                        // Show music player
-                        const musicPlayer = document.getElementById('musicPlayer');
-                        if (musicPlayer) {
-                            musicPlayer.classList.remove('hidden');
-                        }
-                    }).catch(e => {
-                        console.log("❌ Background music blocked");
-                        // Show manual play button
-                        showManualPlayButton();
+        }
+        
+        newBlowBtn.innerHTML = '<i class="fas fa-sparkles"></i> Membuka Kejutan...';
+        newBlowBtn.disabled = true;
+        
+        // 3. ENSURE BACKGROUND MUSIC IS PLAYING
+        setTimeout(() => {
+            const bgMusic = document.getElementById('bgMusicFixed');
+            if (bgMusic) {
+                if (bgMusic.paused) {
+                    bgMusic.play().catch(e => {
+                        console.log("Background music still blocked");
                     });
                 }
-            }, 1000);
-            
-            // 5. STOP SHAKE
-            setTimeout(() => {
-                if (cakeContainer) {
-                    cakeContainer.classList.remove('shake-hard');
-                    document.body.classList.remove('shake-hard');
-                }
-            }, 800);
-            
-            // 6. GO TO NEXT SCENE
-            setTimeout(() => {
-                document.getElementById('scene1').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('scene1').style.display = 'none';
-                    document.getElementById('scene2').style.display = 'flex';
-                    
-                    // Initialize orbs if function exists
-                    if (typeof window.initOrbs === 'function') {
-                        window.initOrbs();
-                    }
-                    
-                    setTimeout(() => {
-                        document.getElementById('scene2').style.opacity = '1';
-                    }, 50);
-                }, 600);
-            }, 2000);
-        };
-        
-        console.log("✅ blowCandle function patched");
-    }
-}
-
-// ==================== MANUAL PLAY BUTTON ====================
-function showManualPlayButton() {
-    const existing = document.getElementById('manualPlayBtn');
-    if (existing) return;
-    
-    const manualBtn = document.createElement('div');
-    manualBtn.id = 'manualPlayBtn';
-    manualBtn.innerHTML = `
-        <div style="
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 2px solid #FF6BB5;
-            text-align: center;
-            max-width: 300px;
-            margin: 20px auto;
-        ">
-            <p style="color: #FF6BB5; margin-bottom: 10px; font-weight: bold;">
-                <i class="fas fa-music"></i> Musik Belum Bisa Diputar
-            </p>
-            <button onclick="playMusicNow()" style="
-                background: linear-gradient(145deg, #FF6BB5, #FF8EC7);
-                color: white;
-                border: none;
-                padding: 12px 25px;
-                border-radius: 25px;
-                cursor: pointer;
-                font-size: 1rem;
-                width: 100%;
-            ">
-                <i class="fas fa-play"></i> Klik untuk Putar Lagu Nadin Amizah
-            </button>
-        </div>
-    `;
-    
-    // Add to scene2 (game scene)
-    const scene2 = document.getElementById('scene2');
-    if (scene2) {
-        scene2.appendChild(manualBtn);
-    } else {
-        document.body.appendChild(manualBtn);
-    }
-}
-
-function playMusicNow() {
-    const bgMusic = document.getElementById('bgMusic');
-    if (bgMusic) {
-        bgMusic.play().then(() => {
-            console.log("✅ Music playing after manual click");
-            const btn = document.getElementById('manualPlayBtn');
-            if (btn) {
-                btn.innerHTML = `
-                    <div style="color: #4CAF50; padding: 15px;">
-                        <i class="fas fa-check-circle"></i> Musik sedang diputar!
-                    </div>
-                `;
-                setTimeout(() => btn.style.display = 'none', 2000);
             }
-        }).catch(e => {
-            alert("❌ Masih diblokir. Coba klik 'Aktifkan Audio' di atas.");
-        });
-    }
+        }, 500);
+        
+        // 4. STOP SHAKE
+        setTimeout(() => {
+            if (cakeContainer) {
+                cakeContainer.classList.remove('shake-hard');
+                document.body.classList.remove('shake-hard');
+            }
+        }, 800);
+        
+        // 5. GO TO NEXT SCENE
+        setTimeout(() => {
+            document.getElementById('scene1').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('scene1').style.display = 'none';
+                document.getElementById('scene2').style.display = 'flex';
+                
+                // Call initOrbs if exists
+                if (typeof window.initOrbs === 'function') {
+                    setTimeout(() => window.initOrbs(), 100);
+                }
+                
+                setTimeout(() => {
+                    document.getElementById('scene2').style.opacity = '1';
+                }, 50);
+            }, 600);
+        }, 2000);
+    });
 }
 
-// ==================== INITIALIZE ON LOAD ====================
+// ==================== INITIALIZE ====================
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM loaded, initializing audio fix...");
+    console.log("DOM ready, applying emergency fix...");
     
-    // Wait a bit for other scripts to load
+    // Wait for other scripts
     setTimeout(() => {
-        initAudioSystem();
+        emergencyAudioFix();
         
-        // Also try to unlock audio automatically on first click anywhere
-        document.addEventListener('click', function firstClickHandler() {
-            unlockAudio();
-            document.removeEventListener('click', firstClickHandler);
-        }, { once: true });
-    }, 1000);
+        // Hide loading screen if exists
+        const loading = document.getElementById('loading');
+        if (loading) {
+            loading.classList.add('hidden');
+        }
+    }, 1500);
 });
 
-// ==================== EXPORT FUNCTIONS ====================
-window.audioFix = {
-    init: initAudioSystem,
-    unlock: unlockAudio,
-    playMusic: playMusicNow
-};
-
-console.log("🎵 Audio Fix System Loaded");
+// ==================== MAKE FUNCTIONS GLOBAL ====================
+window.playTestSound = playTestSound;
+window.playBackgroundMusic = playBackgroundMusic;
+window.updateVolume = updateVolume;
