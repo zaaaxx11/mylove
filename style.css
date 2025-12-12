@@ -499,3 +499,20 @@ footer {
         margin: 10px;
     }
 }
+.photo-container {
+    /* Container flex untuk center foto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 60vh;  /* Max tinggi */
+    padding: 15px;     /* Space sekitar foto */
+    background: #f8f8f8; /* Background jika ada space kosong */
+}
+
+.memory-photo {
+    max-width: 100%;   /* Max lebar container */
+    max-height: 55vh;  /* Max tinggi container */
+    width: auto;       /* Biar natural width */
+    height: auto;      /* Biar natural height */
+    object-fit: contain; /* Maintain aspect ratio */
+}
