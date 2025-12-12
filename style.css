@@ -551,4 +551,19 @@ body {
         padding: 15px 30px;
         font-size: 1.1rem;
     }
+
+}
+.orb {
+    background: linear-gradient(45deg, #FF9AA2, #FFB7B2);
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+    transition: all 0.3s;
+}
+
+.orb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+}
+
+.orb.collected {
+    background: linear-gradient(45deg, #C7F9CC, #80ED99);
 }
