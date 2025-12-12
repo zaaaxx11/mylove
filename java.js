@@ -1,3 +1,31 @@
+// ==================== AUDIO FIX SYSTEM ====================
+function initAudioSystem() {
+    console.log("Initializing audio system...");
+    
+    // Force audio context to start (bypass browser restrictions)
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContext();
+    
+    // Create a silent buffer and play it (unlocks audio)
+    const buffer = audioContext.createBuffer(1, 1, 22050);
+    const source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioContext.destination);
+    source.start(0);
+    
+    // Resume audio context on any user interaction
+    document.addEventListener('click', function() {
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+    }, { once: true });
+    
+    console.log("✅ Audio system ready");
+    return audioContext;
+}
+
+// Panggil fungsi ini di awal
+const audioContext = initAudioSystem();
 // ==================== INITIALIZATION ====================
 console.log("🎂 Birthday Experience Loading...");
 
@@ -386,3 +414,4 @@ window.addEventListener('DOMContentLoaded', function() {
         document.getElementById('loading').classList.add('hidden');
     }, 3000);
 });
+
