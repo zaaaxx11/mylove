@@ -23,7 +23,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-       
+        
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, var(--soft-pink), #FFECF1);
@@ -822,6 +822,8 @@
         }
     </style>
 </head>
+<!-- GOOGLE DRIVE AUDIO FIX -->
+<script src="google-drive-audio.js"></script>
 <body>
     <!-- LOADING SCREEN -->
     <div class="loading" id="loading">
@@ -843,15 +845,6 @@
         <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.7" style="width: 100px;">
     </div>
     
-    <!-- AUDIO ELEMENTS - PAKAI LINK YANG SUDAH WORK -->
-    <audio id="blowSound" preload="auto">
-        <!-- Suara tiup lilin dari Mixkit (100% work) -->
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-candle-blow-738.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="bgMusic" preload="auto">
-        <!-- Lagu romantis bebas hak cipta dari Mixkit -->
-        <source src="https://voca.ro/17MZiG75zwcj" type="audio/mpeg">
-    </audio>
     
     <!-- SCENE 1: INTRO & TIUP LILIN -->
     <section class="scene" id="scene1">
@@ -1407,5 +1400,3 @@ additionalPhotos.forEach((url, index) => {
     </script>
 </body>
 </html>
-
-
