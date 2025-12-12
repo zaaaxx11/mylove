@@ -157,60 +157,26 @@ function blowCandle() {
     const btn = document.getElementById('blowButton');
     const cakeContainer = document.getElementById('cakeContainer');
     
-    // 1. EFEK GETARAN KERAS
-    cakeContainer.classList.add('shake-hard');
-    document.body.classList.add('shake-hard');
+    // Play blow sound
+    const blowSound = new Audio('https://assets.mixkit.co/sfx/download/mixkit-candle-blow-738.mp3');
+    blowSound.volume = 0.8;
+    blowSound.play().catch(e => console.log("Blow sound skipped"));
     
-    // 2. MAINKAN SUARA TIUP (ini pasti work karena user klik)
-    blowSound.currentTime = 0;
-    blowSound.play().then(() => {
-        console.log("✅ Suara tiup berhasil!");
-        
-        // 3. MAINKAN MUSIK BACKGROUND (setelah 0.5 detik)
-        setTimeout(() => {
-            bgMusic.currentTime = 0;
-            bgMusic.play().then(() => {
-                console.log("✅ Musik background berhasil!");
-                musicStarted = true;
-                isMusicPlaying = true;
-                musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-                musicInfo.textContent = 'Musik menyala';
-                
-                // Show music player
-                setTimeout(() => {
-                    musicPlayer.classList.remove('hidden');
-                }, 1000);
-            }).catch(e => {
-                console.log("Musik akan dimulai setelah interaksi lain");
-                musicInfo.textContent = 'Klik play untuk musik';
-            });
-        }, 500);
-        
-    }).catch(e => {
-        console.log("Browser memblokir suara, lanjut tanpa audio");
-    });
+    // Animations
+    if (cakeContainer) {
+        cakeContainer.classList.add('shake-hard');
+        setTimeout(() => cakeContainer.classList.remove('shake-hard'), 800);
+    }
     
-    // 4. ANIMASI API PADAM
     flame.style.animation = 'none';
     flame.style.opacity = '0';
     flame.style.transform = 'scale(0.2)';
-    flame.style.transition = 'all 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+    flame.style.transition = 'all 0.9s';
     
-    // 5. UBAH TOMBOL
     btn.innerHTML = '<i class="fas fa-sparkles"></i> Membuka Kejutan...';
     btn.disabled = true;
-    btn.style.background = 'linear-gradient(145deg, #81C784, #4CAF50)';
     
-    // 6. CREATE CONFETTI
-    createConfetti(50);
-    
-    // 7. HENTIKAN GETARAN SETELAH 0.8 DETIK
-    setTimeout(() => {
-        cakeContainer.classList.remove('shake-hard');
-        document.body.classList.remove('shake-hard');
-    }, 800);
-    
-    // 8. PINDAH SCENE SETELAH 2 DETIK
+    // Go to scene2 after 2 seconds
     setTimeout(() => {
         document.getElementById('scene1').style.opacity = '0';
         setTimeout(() => {
@@ -414,4 +380,5 @@ window.addEventListener('DOMContentLoaded', function() {
         document.getElementById('loading').classList.add('hidden');
     }, 3000);
 });
+
 
