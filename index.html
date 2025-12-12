@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicorn Garden - Happy 22nd Birthday! 🦄</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/unicorn-favicon.ico">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="screen">
+        <div class="loading-content">
+            <div class="unicorn-loader">
+                <div class="unicorn-head">
+                    <div class="horn"></div>
+                    <div class="ear"></div>
+                </div>
+                <div class="unicorn-body"></div>
+            </div>
+            <p class="loading-text">Memuat keajaiban...</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entrance Scene -->
+    <div id="entrance-scene" class="screen hidden">
+        <div class="portal-background"></div>
+        <div class="entrance-content">
+            <h1 class="magic-title">🦄 Unicorn Garden 🦄</h1>
+            <p class="subtitle">Petualangan ajaib untuk ulang tahunmu yang ke-22!</p>
+            <button id="start-btn" class="magic-btn">
+                <i class="fas fa-star"></i> Masuk ke Taman Ajaib
+            </button>
+            <div class="instructions">
+                <p><i class="fas fa-mobile-alt"></i> Putar HP untuk pengalaman terbaik</p>
+                <p><i class="fas fa-headphones"></i> Nyalakan speaker untuk musik</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Container -->
+    <div id="game-container" class="hidden">
+        <!-- Scene 1: Rainbow Path -->
+        <div id="scene-rainbow" class="scene active">
+            <!-- Parallax Background Layers -->
+            <div class="parallax-layer layer-1"></div>
+            <div class="parallax-layer layer-2"></div>
+            <div class="parallax-layer layer-3"></div>
+            
+            <!-- Scene Content -->
+            <div class="scene-content">
+                <h2 class="scene-title">Rainbow Path</h2>
+                <p class="scene-desc">Kumpulkan 5 orb pertama di jalan pelangi!</p>
+                
+                <!-- Orbs Container -->
+                <div class="orbs-container">
+                    <!-- Orb akan dibuat dengan JavaScript -->
+                </div>
+                
+                <!-- Navigation -->
+                <div class="scene-nav">
+                    <button class="nav-btn prev-btn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="progress-display">
+                        <span class="orb-count">0</span>/22 Orb
+                    </div>
+                    <button class="nav-btn next-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Music Player -->
+        <div class="music-player">
+            <button id="music-toggle" class="music-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <div class="song-info">
+                <span class="song-title">Semua Aku Dirayakan</span>
+                <span class="song-artist">Nadin Amizah</span>
+            </div>
+            <input type="range" id="volume-slider" min="0" max="100" value="25">
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="bg-music" loop>
+        <source src="assets/music/semua-aku-dirayakan-instrumental.mp3" type="audio/mpeg">
+        Browser kamu tidak mendukung audio element.
+    </audio>
+    
+    <audio id="magic-sound" src="assets/sounds/magic-twinkle.mp3"></audio>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
